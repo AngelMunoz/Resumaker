@@ -1,49 +1,130 @@
 {
     "$schema": "./resumaker.schema.json",
-    "profile": {
-        "name": "My Name",
-        "lastName": "My LastName",
-        "email": "ghosts@hoenn.trainer",
-        "objectives": "To catch 'em all",
-        "personalSummary": "I'm a pokemon trainer that want's to catch every existing pokemon, I'm eager to learn more and I don't like losing",
-        "picture": "https://assets.pokemon.com/assets/cms2/img/pokedex/full/001.png"
-    },
-    "skills": [
+    "CustomTemplatePath": "./templates/custom.sample.pdfx",
+    "ResumeList": [
         {
-            "name": "Ghost Pokemon",
-            "years": 2
-        }
-    ],
-    "previousJobs": [
-        {
-            "employer": "Hoenn Elite Four Member",
-            "summary": "I was the Former Ghost Elite Four Member in the Hoen Region for about 5 years."
-        }
-    ],
-    "projects": [
-        {
-            "name": "Ghost Monotype Team",
-            "toolOrStack": [
-                "Dusclops",
-                "Bannete",
-                "Gengar",
-                "Misdrevous",
-                "Chandelure",
-                "Sableye"
+            "Language": "English",
+            "Profile": {
+                "Name": "Ghost",
+                "LastName": "Trainer",
+                "Email": "ghost.dude@hoenn.trainers",
+                "Objectives": "Be the ghost pokemon master",
+                "PersonalSummary": "I'm looking forward to be the best ghost pokemon trainer in the world, I'm eager to learn from others and myself to overcome our weaknesses as a team",
+                "Picture": "https://images.wikidexcdn.net/mwuploads/wikidex/4/4c/latest/20190708202421/Alistair.png"
+            },
+            "Skills": [
+                {
+                    "Name": "Ghost Team Pokemon",
+                    "Years": 5
+                }
             ],
-            "url": "https://github.com/Username/My-Cool-Project"
-        }
-    ],
-    "devLinks": [
+            "PreviousJobs": [
+                {
+                    "Employer": "Hoenn Elite Four",
+                    "Summary": "I was a member of the Elite Four in the Hoenn region for over 5 years being myself a show stopper for many"
+                },
+                {
+                    "Employer": "Galar Ghost GYM",
+                    "Summary": "I was the Ghost GYM leader in the Galar Region for over 3 years"
+                }
+            ],
+            "Projects": [
+                {
+                    "Name": "Hoenn Elite Four Ghost Team",
+                    "ToolOrStack": [
+                        "Gengar",
+                        "Chandelure",
+                        "Gorluk",
+                        "Cursola",
+                        "Sinistea",
+                        "Sableye"
+                    ],
+                    "Url": "https://github.com/Username/My-Cool-Project"
+                },
+                {
+                    "Name": "Galar Ghost GYM Team",
+                    "ToolOrStack": [
+                        "Palosand",
+                        "Alolan Marowak",
+                        "Mismagius",
+                        "Banette",
+                        "Sinistea",
+                        "Sableye"
+                    ],
+                    "Url": "https://github.com/Username/My-Cool-Project"
+                }
+            ],
+            "DevLinks": [],
+            "SocialMedia": []
+        },
         {
-            "name": "twitter",
-            "url": "https://twitter.com/<USERNAME>"
-        }
-    ],
-    "socialMedia": [
-        {
-            "name": "twitter",
-            "url": "https://twitter.com/<USERNAME>"
+            "Language": "Spanish",
+            "Profile": {
+                "Name": "Entrenador",
+                "LastName": "Fantasma",
+                "Email": "ghost.dude@hoenn.trainers",
+                "Objectives": "Ser el maestro de los pokemon Fantasma",
+                "PersonalSummary": "Busco ser el mejor entrenador de los pokemon Fantasma, Estoy listo para aprender de los demas y de mi mismo para superar nuestras debilidades como equipo",
+                "Picture": "https://images.wikidexcdn.net/mwuploads/wikidex/4/4c/latest/20190708202421/Alistair.png"
+            },
+            "Skills": [
+                {
+                    "Name": "Equipo Pokemon Fantasma",
+                    "Years": 5
+                }
+            ],
+            "PreviousJobs": [
+                {
+                    "Employer": "Hoenn Elite Four",
+                    "Summary": "Fui miembro de la elite pokemon en la region Hoenn por mas de cinco años siendo un tope para muchos entrenadores"
+                },
+                {
+                    "Employer": "Galar Ghost GYM",
+                    "Summary": "Fui el entrenador del gimnasio fantasma en la region galar por mas de tres años"
+                }
+            ],
+            "Projects": [
+                {
+                    "Name": "Equipo de La elite pokemon de la region Hoenn",
+                    "ToolOrStack": [
+                        "Gengar",
+                        "Chandelure",
+                        "Gorluk",
+                        "Cursola",
+                        "Sinistea",
+                        "Sableye"
+                    ],
+                    "Url": "https://github.com/Username/My-Cool-Project"
+                },
+                {
+                    "Name": "Equipo del gimnasion fantasma de la region Galar",
+                    "ToolOrStack": [
+                        "Palosand",
+                        "Alolan Marowak",
+                        "Mismagius",
+                        "Banette",
+                        "Sinistea",
+                        "Sableye"
+                    ],
+                    "Url": "https://github.com/Username/My-Cool-Project"
+                }
+            ],
+            "DevLinks": [
+                {
+                    "Name": "LinkedIn",
+                    "Url": "https://linkedin.com/<USERNAME>"
+                },
+                {
+                    "Name": "GitHub",
+                    "Url": "https://github.com/<USERNAME>"
+                }
+            ],
+            "SocialMedia": [
+                {
+                    "Name": "twitter",
+                    "Url": "https://twitter.com/<USERNAME>"
+                }
+            ]
         }
     ]
 }

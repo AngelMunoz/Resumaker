@@ -4,128 +4,151 @@
     "description": "A Hopefully easy tool to automate your resume changes",
     "type": "object",
     "properties": {
-        "profile": {
-            "description": "Contains your personal information such as name, email and profile picture",
-            "type": "object",
-            "properties": {
-                "name": {
-                    "description": "First Name (s)",
-                    "type": "string",
-                    "minLength": 0
-                },
-                "lastName": {
-                    "description": "Last Name (s)",
-                    "type": "string",
-                    "minLength": 0
-                },
-                "personalSummary": {
-                    "description": "Introduce yourself to whomever you send your resume",
-                    "type": "string",
-                    "minLength": 0
-                },
-                "objectives": {
-                    "description": "As a Professional what are you trying to accomplish?",
-                    "type": "string",
-                    "minLength": 0
-                },
-                "picture": {
-                    "description": "A url to your profile picture",
-                    "type": "string",
-                    "minLength": 0
-                },
-                "email": {
-                    "description": "If someone wants to reach you where can they find you?",
-                    "type": "string",
-                    "minLength": 0
-                }
-            },
-            "required": [
-                "name",
-                "lastName",
-                "personalSummary",
-                "objectives",
-                "picture"
-            ]
+        "CustomTemplatePath": {
+            "type": "string"
         },
-        "skills": {
-            "description": "A list of 'Skills' these can be either tools or languages or anything else you would deem necessary",
-            "type": "array",
+        "ResumeList": {
+            "description": "List of resumes in different language (English, Spanish, German, etc.)",
             "items": {
-                "$ref": "#/definitions/skill"
-            },
-            "minItems": 0
-        },
-        "previousJobs": {
-            "description": "A list of previous employers and a description of what did you accomplish there",
-            "type": "array",
-            "items": {
-                "$ref": "#/definitions/job"
-            },
-            "minItems": 0
-        },
-        "projects": {
-            "description": "A description of a showcase or comprobable experience project",
-            "type": "array",
-            "items": {
-                "$ref": "#/definitions/project"
-            },
-            "minItems": 0
-        },
-        "devLinks": {
-            "description": "A list of URL resources related to your dev experience (github, gitlab, etc)",
-            "type": "array",
-            "items": {
-                "$ref": "#/definitions/link"
-            },
-            "minItems": 0
-        },
-        "socialMedia": {
-            "description": "A list of URL resources related to your social media (twitter, linkedin, etc)",
-            "type": "array",
-            "items": {
-                "$ref": "#/definitions/link"
-            },
-            "minItems": 0
+                "$ref": "#/definitions/Resume"
+            }
         }
     },
     "required": [
-        "profile",
-        "skills",
-        "previousJobs",
-        "projects",
-        "devLinks",
-        "socialMedia"
+        "CustomTemplatePath",
+        "ResumeList"
     ],
     "definitions": {
-        "skill": {
+        "Resume": {
+            "description": "This is your resume in a specific language you may add as many resumes as needed",
+            "type": "object",
+            "properties": {
+                "Language": {
+                    "description": "language of this resume",
+                    "type": "string"
+                },
+                "Profile": {
+                    "description": "Contains your personal information such as name, email and profile picture",
+                    "type": "object",
+                    "properties": {
+                        "Name": {
+                            "description": "First Name (s)",
+                            "type": "string",
+                            "minLength": 0
+                        },
+                        "LastName": {
+                            "description": "Last Name (s)",
+                            "type": "string",
+                            "minLength": 0
+                        },
+                        "PersonalSummary": {
+                            "description": "Introduce yourself to whomever you send your resume",
+                            "type": "string",
+                            "minLength": 0
+                        },
+                        "Objectives": {
+                            "description": "As a Professional what are you trying to accomplish?",
+                            "type": "string",
+                            "minLength": 0
+                        },
+                        "Picture": {
+                            "description": "A url to your profile picture",
+                            "type": "string",
+                            "minLength": 0
+                        },
+                        "Email": {
+                            "description": "If someone wants to reach you where can they find you?",
+                            "type": "string",
+                            "minLength": 0
+                        }
+                    },
+                    "required": [
+                        "Name",
+                        "LastName",
+                        "PersonalSummary",
+                        "Objectives",
+                        "Picture"
+                    ]
+                },
+                "Skills": {
+                    "description": "A list of 'Skills' these can be either tools or languages or anything else you would deem necessary",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Skill"
+                    },
+                    "minItems": 0
+                },
+                "PreviousJobs": {
+                    "description": "A list of previous employers and a description of what did you accomplish there",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Job"
+                    },
+                    "minItems": 0
+                },
+                "Projects": {
+                    "description": "A description of a showcase or comprobable experience project",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Project"
+                    },
+                    "minItems": 0
+                },
+                "DevLinks": {
+                    "description": "A list of URL resources related to your dev experience (github, gitlab, etc)",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Link"
+                    },
+                    "minItems": 0
+                },
+                "SocialMedia": {
+                    "description": "A list of URL resources related to your social media (twitter, linkedin, etc)",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Link"
+                    },
+                    "minItems": 0
+                }
+            },
+            "required": [
+                "Profile",
+                "Skills",
+                "PreviousJobs",
+                "Projects",
+                "DevLinks",
+                "SocialMedia"
+            ]
+        },
+        "Skill": {
             "description": "Anything you think helps you get the job done, it can be a language, a tool or something else",
             "type": "object",
             "properties": {
-                "name": {
+                "Name": {
                     "type": "string",
                     "minLength": 0
                 },
-                "years": {
+                "Years": {
                     "type": "number",
                     "minimum": 0
                 }
             },
             "examples": [
                 {
-                    "name": ".Net",
-                    "years": 2
+                    "Name": ".Net",
+                    "Years": 2
                 }
             ]
         },
-        "job": {
+        "Job": {
             "description": "A Job description you had in the past",
             "type": "object",
             "properties": {
-                "employer": {
+                "Employer": {
                     "type": "string",
                     "minLength": 0
                 },
-                "summary": {
+                "Summary": {
                     "description": "What did you accomplish there? What where you doing there?",
                     "type": "string",
                     "minLength": 0
@@ -133,20 +156,20 @@
             },
             "examples": [
                 {
-                    "employer": "My Employer's Name",
-                    "summary": "What I accomplished there"
+                    "Employer": "My Employer's Name",
+                    "Summary": "What I accomplished there"
                 }
             ]
         },
-        "project": {
-            "description": "Brief description of a project you have worked on in the past",
+        "Project": {
+            "escription": "Brief description of a project you have worked on in the past",
             "type": "object",
             "properties": {
-                "name": {
+                "Name": {
                     "type": "string",
                     "minLength": 0
                 },
-                "toolOrStack": {
+                "ToolOrStack": {
                     "description": "What did you use to make this happen?",
                     "type": "array",
                     "minItems": 0,
@@ -154,39 +177,43 @@
                         "type": "string"
                     }
                 },
-                "url": {
+                "Url": {
                     "type": "string",
                     "minLength": 0
                 }
             },
             "examples": [
                 {
-                    "name": "My Cool Project",
-                    "toolOrStack": [
+                    "Name": "My Cool Project",
+                    "ToolOrStack": [
                         "F#",
                         ".netcore"
                     ],
-                    "url": "https://github.com/Username/My-Cool-Project"
+                    "Url": "https://github.com/Username/My-Cool-Project"
                 }
             ]
         },
-        "link": {
+        "Link": {
             "description": "Represents a Web URL",
             "type": "object",
             "properties": {
-                "name": {
+                "Name": {
                     "type": "string",
                     "minLength": 0
                 },
-                "url": {
+                "Url": {
                     "type": "string",
                     "minLength": 0
                 }
             },
             "examples": [
                 {
-                    "name": "twitter",
-                    "url": "https://twitter.com/<USERNAME>"
+                    "Name": "Twitter",
+                    "Url": "https://twitter.com/<USERNAME>"
+                },
+                {
+                    "Name": "GitHub",
+                    "Url": "https://github.com/<USERNAME>"
                 }
             ]
         }

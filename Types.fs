@@ -22,9 +22,15 @@ module Types =
           Email: string }
 
     type Resume =
-        { Profile: Profile
+        { Language: string
+          Profile: Profile
           Skills: seq<Skill>
           PreviousJobs: seq<Job>
           Projects: seq<Project>
           DevLinks: seq<Link>
           SocialMedia: seq<Link> }
+
+
+    type ResumakerData =
+        { ResumeList: seq<Resume>
+          CustomTemplatePath: string }
