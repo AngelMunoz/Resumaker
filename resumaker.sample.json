@@ -1,0 +1,49 @@
+{
+    "$schema": "./resumaker.schema.json",
+    "profile": {
+        "name": "My Name",
+        "lastName": "My LastName",
+        "email": "ghosts@hoenn.trainer",
+        "objectives": "To catch 'em all",
+        "personalSummary": "I'm a pokemon trainer that want's to catch every existing pokemon, I'm eager to learn more and I don't like losing",
+        "picture": "https://assets.pokemon.com/assets/cms2/img/pokedex/full/001.png"
+    },
+    "skills": [
+        {
+            "name": "Ghost Pokemon",
+            "years": 2
+        }
+    ],
+    "previousJobs": [
+        {
+            "employer": "Hoenn Elite Four Member",
+            "summary": "I was the Former Ghost Elite Four Member in the Hoen Region for about 5 years."
+        }
+    ],
+    "projects": [
+        {
+            "name": "Ghost Monotype Team",
+            "toolOrStack": [
+                "Dusclops",
+                "Bannete",
+                "Gengar",
+                "Misdrevous",
+                "Chandelure",
+                "Sableye"
+            ],
+            "url": "https://github.com/Username/My-Cool-Project"
+        }
+    ],
+    "devLinks": [
+        {
+            "name": "twitter",
+            "url": "https://twitter.com/<USERNAME>"
+        }
+    ],
+    "socialMedia": [
+        {
+            "name": "twitter",
+            "url": "https://twitter.com/<USERNAME>"
+        }
+    ]
+}

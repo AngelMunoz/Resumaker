@@ -1,0 +1,194 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "title": "Resumaker",
+    "description": "A Hopefully easy tool to automate your resume changes",
+    "type": "object",
+    "properties": {
+        "profile": {
+            "description": "Contains your personal information such as name, email and profile picture",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "description": "First Name (s)",
+                    "type": "string",
+                    "minLength": 0
+                },
+                "lastName": {
+                    "description": "Last Name (s)",
+                    "type": "string",
+                    "minLength": 0
+                },
+                "personalSummary": {
+                    "description": "Introduce yourself to whomever you send your resume",
+                    "type": "string",
+                    "minLength": 0
+                },
+                "objectives": {
+                    "description": "As a Professional what are you trying to accomplish?",
+                    "type": "string",
+                    "minLength": 0
+                },
+                "picture": {
+                    "description": "A url to your profile picture",
+                    "type": "string",
+                    "minLength": 0
+                },
+                "email": {
+                    "description": "If someone wants to reach you where can they find you?",
+                    "type": "string",
+                    "minLength": 0
+                }
+            },
+            "required": [
+                "name",
+                "lastName",
+                "personalSummary",
+                "objectives",
+                "picture"
+            ]
+        },
+        "skills": {
+            "description": "A list of 'Skills' these can be either tools or languages or anything else you would deem necessary",
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/skill"
+            },
+            "minItems": 0
+        },
+        "previousJobs": {
+            "description": "A list of previous employers and a description of what did you accomplish there",
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/job"
+            },
+            "minItems": 0
+        },
+        "projects": {
+            "description": "A description of a showcase or comprobable experience project",
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/project"
+            },
+            "minItems": 0
+        },
+        "devLinks": {
+            "description": "A list of URL resources related to your dev experience (github, gitlab, etc)",
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/link"
+            },
+            "minItems": 0
+        },
+        "socialMedia": {
+            "description": "A list of URL resources related to your social media (twitter, linkedin, etc)",
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/link"
+            },
+            "minItems": 0
+        }
+    },
+    "required": [
+        "profile",
+        "skills",
+        "previousJobs",
+        "projects",
+        "devLinks",
+        "socialMedia"
+    ],
+    "definitions": {
+        "skill": {
+            "description": "Anything you think helps you get the job done, it can be a language, a tool or something else",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "minLength": 0
+                },
+                "years": {
+                    "type": "number",
+                    "minimum": 0
+                }
+            },
+            "examples": [
+                {
+                    "name": ".Net",
+                    "years": 2
+                }
+            ]
+        },
+        "job": {
+            "description": "A Job description you had in the past",
+            "type": "object",
+            "properties": {
+                "employer": {
+                    "type": "string",
+                    "minLength": 0
+                },
+                "summary": {
+                    "description": "What did you accomplish there? What where you doing there?",
+                    "type": "string",
+                    "minLength": 0
+                }
+            },
+            "examples": [
+                {
+                    "employer": "My Employer's Name",
+                    "summary": "What I accomplished there"
+                }
+            ]
+        },
+        "project": {
+            "description": "Brief description of a project you have worked on in the past",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "minLength": 0
+                },
+                "toolOrStack": {
+                    "description": "What did you use to make this happen?",
+                    "type": "array",
+                    "minItems": 0,
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "url": {
+                    "type": "string",
+                    "minLength": 0
+                }
+            },
+            "examples": [
+                {
+                    "name": "My Cool Project",
+                    "toolOrStack": [
+                        "F#",
+                        ".netcore"
+                    ],
+                    "url": "https://github.com/Username/My-Cool-Project"
+                }
+            ]
+        },
+        "link": {
+            "description": "Represents a Web URL",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "minLength": 0
+                },
+                "url": {
+                    "type": "string",
+                    "minLength": 0
+                }
+            },
+            "examples": [
+                {
+                    "name": "twitter",
+                    "url": "https://twitter.com/<USERNAME>"
+                }
+            ]
+        }
+    }
+}
