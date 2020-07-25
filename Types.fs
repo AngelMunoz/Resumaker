@@ -30,7 +30,4 @@ module Types =
           DevLinks: seq<Link>
           SocialMedia: seq<Link> }
 
-
-    type ResumakerData =
-        { ResumeList: seq<Resume>
-          CustomTemplatePath: string }
+    type ResumakerData = { ResumeList: seq<Resume> }

@@ -5,7 +5,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Types.fs" />
-    <Compile Include="Pdf.fs" />
+    <Compile Include="Generator.fs" />
     <Compile Include="Options.fs" />
     <Compile Include="Actions.fs" />
     <Compile Include="Program.fs" />
