@@ -1,6 +1,5 @@
 {
     "$schema": "./resumaker.schema.json",
-    "CustomTemplatePath": "./templates/custom.sample.pdfx",
     "ResumeList": [
         {
             "Language": "English",

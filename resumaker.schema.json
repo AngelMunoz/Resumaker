@@ -15,7 +15,6 @@
         }
     },
     "required": [
-        "CustomTemplatePath",
         "ResumeList"
     ],
     "definitions": {
