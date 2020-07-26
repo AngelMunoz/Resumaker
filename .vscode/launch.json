@@ -9,11 +9,11 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/bin/Debug/net5.0/Resumaker.dll",
+            "program": "${workspaceFolder}/bin/Debug/netcoreapp3.1/Resumaker.dll",
             "args": [
                 "generate",
                 "-p",
-                "C:\\Users\\scyth\\Documents\\resume\\resumaker.json"
+                "./resumaker.sample.json"
             ],
             "cwd": "${workspaceFolder}",
             "stopAtEntry": false,
