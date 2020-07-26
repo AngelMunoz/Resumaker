@@ -1,28 +1,42 @@
 namespace Resumaker
 
 open Types
-open Feliz.ViewEngine
 open System
 
 [<RequireQualifiedAccess>]
 module Templates =
+    open System.IO
+    open System.Reflection
+    open Scriban
 
     let defaultTemplate (data: Resume) =
-        Html.html
-            [ Html.head []
-              Html.body [ Html.h1 data.Language ] ]
+        let path =
+            let dir =
+                Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)
+
+            Path.Combine(dir, "templates", "default.scriban-html")
+
+        let template =
+            let content = File.ReadAllText path
+            Template.Parse(content, sourceFilePath = path)
+
+        template.Render(data)
+
+    let fromDisk (data: Resume) (filePath: string) = ""
 
 [<RequireQualifiedAccess>]
 module Generator =
     open System.Text
     open System.IO
 
-    let html (data: Resume) (cwd: string) =
-        let content = Templates.defaultTemplate data
-        let html = Render.htmlDocument content
+    let html (data: Resume) (cwd: string) (templateFilePath: Option<string>) =
+        let html =
+            match templateFilePath with
+            | Some path -> Templates.fromDisk data path
+            | None -> Templates.defaultTemplate data
 
         let path =
-            Path.Combine(cwd, sprintf "Resume-%s.html" data.Language)
+            Path.Combine(cwd, sprintf "Resume-%s.html" data.Language.Name)
 
         use stream = File.OpenWrite(path)
         let bytes = Encoding.UTF8.GetBytes html
