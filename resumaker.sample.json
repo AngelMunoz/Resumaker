@@ -1,8 +1,18 @@
 {
     "$schema": "https://raw.githubusercontent.com/AngelMunoz/Resumaker/master/resumaker.schema.json",
+    "Translations": {
+        "Skills": "Skil"
+    },
     "ResumeList": [
         {
-            "Language": "English",
+            "Language": {
+                "Name": "en-US",
+                "Keywords": {
+                    "Skills": "Skills",
+                    "PastExperience": "Past Experience",
+                    "Projects": "Projects"
+                }
+            },
             "Profile": {
                 "Name": "Ghost",
                 "LastName": "Trainer",
@@ -13,17 +23,27 @@
             },
             "Skills": [
                 {
-                    "Name": "Ghost Team Pokemon",
-                    "Years": 5
+                    "Name": "Ghost Pokemon",
+                    "Experience": "8 years"
+                },
+                {
+                    "Name": "Toxic Pokemon",
+                    "Experience": "3 years"
+                },
+                {
+                    "Name": "Dark Pokemon",
+                    "Experience": "3 years"
                 }
             ],
             "PreviousJobs": [
                 {
                     "Employer": "Hoenn Elite Four",
+                    "Title": "Elite Four Member",
                     "Summary": "I was a member of the Elite Four in the Hoenn region for over 5 years being myself a show stopper for many"
                 },
                 {
-                    "Employer": "Galar Ghost GYM",
+                    "Employer": "Galar Pokemon League",
+                    "Title": "GYM Leader",
                     "Summary": "I was the Ghost GYM leader in the Galar Region for over 3 years"
                 }
             ],
@@ -57,7 +77,14 @@
             "SocialMedia": []
         },
         {
-            "Language": "Spanish",
+            "Language": {
+                "Name": "es-MX",
+                "Keywords": {
+                    "Skills": "Habilidades",
+                    "PastExperience": "Experiencia Anterior",
+                    "Projects": "Portafolio"
+                }
+            },
             "Profile": {
                 "Name": "Entrenador",
                 "LastName": "Fantasma",
@@ -68,17 +95,27 @@
             },
             "Skills": [
                 {
-                    "Name": "Equipo Pokemon Fantasma",
-                    "Years": 5
+                    "Name": "Pokemon Fantasma",
+                    "Experience": "5 años"
+                },
+                {
+                    "Name": "Pokemon Toxico",
+                    "Experience": "3 años"
+                },
+                {
+                    "Name": "Pokemon Siniestro",
+                    "Experience": "3 años"
                 }
             ],
             "PreviousJobs": [
                 {
                     "Employer": "Hoenn Elite Four",
+                    "Title": "Miembro de la elite pokemon",
                     "Summary": "Fui miembro de la elite pokemon en la region Hoenn por mas de cinco años siendo un tope para muchos entrenadores"
                 },
                 {
-                    "Employer": "Galar Ghost GYM",
+                    "Employer": "Liga Pokemon Galar",
+                    "Title": "Lider de gimnasio",
                     "Summary": "Fui el entrenador del gimnasio fantasma en la region galar por mas de tres años"
                 }
             ],

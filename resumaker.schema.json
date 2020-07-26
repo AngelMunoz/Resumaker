@@ -4,9 +4,6 @@
     "description": "A Hopefully easy tool to automate your resume changes",
     "type": "object",
     "properties": {
-        "CustomTemplatePath": {
-            "type": "string"
-        },
         "ResumeList": {
             "description": "List of resumes in different language (English, Spanish, German, etc.)",
             "items": {
@@ -15,7 +12,8 @@
         }
     },
     "required": [
-        "ResumeList"
+        "ResumeList",
+        "Translations"
     ],
     "definitions": {
         "Resume": {
@@ -24,7 +22,16 @@
             "properties": {
                 "Language": {
                     "description": "language of this resume",
-                    "type": "string"
+                    "properties": {
+                        "Name": {
+                            "type": "string",
+                            "pattern": "^([a-zA-Z]{2,3}-[a-zA-Z]{2,3})$"
+                        },
+                        "Keywords": {
+                            "type": "object",
+                            "description": "Put here your translatable keywords"
+                        }
+                    }
                 },
                 "Profile": {
                     "description": "Contains your personal information such as name, email and profile picture",
@@ -127,15 +134,19 @@
                     "type": "string",
                     "minLength": 0
                 },
-                "Years": {
-                    "type": "number",
-                    "minimum": 0
+                "Experience": {
+                    "type": "string",
+                    "minLength": 0
                 }
             },
+            "required": [
+                "Name",
+                "Experience"
+            ],
             "examples": [
                 {
                     "Name": ".Net",
-                    "Years": 2
+                    "Experience": "two years"
                 }
             ]
         },
@@ -147,15 +158,25 @@
                     "type": "string",
                     "minLength": 0
                 },
+                "Title": {
+                    "type": "string",
+                    "minLength": 0
+                },
                 "Summary": {
                     "description": "What did you accomplish there? What where you doing there?",
                     "type": "string",
                     "minLength": 0
                 }
             },
+            "required": [
+                "Employer",
+                "Title",
+                "Summary"
+            ],
             "examples": [
                 {
                     "Employer": "My Employer's Name",
+                    "Job Title": "Project Manager",
                     "Summary": "What I accomplished there"
                 }
             ]
@@ -181,6 +202,11 @@
                     "minLength": 0
                 }
             },
+            "required": [
+                "Name",
+                "ToolOrStack",
+                "Url"
+            ],
             "examples": [
                 {
                     "Name": "My Cool Project",
@@ -205,6 +231,10 @@
                     "minLength": 0
                 }
             },
+            "required": [
+                "Name",
+                "Url"
+            ],
             "examples": [
                 {
                     "Name": "Twitter",
