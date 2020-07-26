@@ -16,11 +16,16 @@ module Options =
     type GenerateOptions =
         { [<Option('p', "path", Required = false, HelpText = "Specify a path to the resumaker.json file")>]
           Path: string
-          [<Option('t',
-                   "type",
+          [<Option('o',
+                   "output",
                    Required = false,
                    HelpText = "Type of the produced output (Html for the moment)",
                    Default = "html")>]
           OutputType: string
-          [<Option('o', "only", Required = false, HelpText = "Create only the specified language resume")>]
-          Only: seq<string> }
+          [<Option('t',
+                   "template",
+                   Required = false,
+                   HelpText = "the file path to the custom template to use for generation")>]
+          TemplatePath: string
+          [<Option('l', "language", Required = false, HelpText = "Create only the specified language resume")>]
+          Language: seq<string> }
