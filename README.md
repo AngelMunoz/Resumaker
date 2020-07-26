@@ -13,7 +13,11 @@ Download the binary and put it on your PATH then start generating your resume, y
 
 
 ### .Net tool
-WIP
+This is also available as a dotnet global tool
+
+```
+dotnet tool install --global Resumaker --version 0.1.0
+```
 
 
 By default resumaker-cli will try to look for the `resumaker.json` file wherever you invoke the tool. If that file is not present there's the handy `init` command which will create the file for you with A couple resumes of some ghost pokemon trainer.
