@@ -363,3 +363,5 @@ FodyWeavers.xsd
 
 *.pdf
 [rR]esume*.html
+
+dist/
