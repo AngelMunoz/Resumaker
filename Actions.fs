@@ -40,7 +40,13 @@ module Actions =
     let generate (opts: GenerateOptions): int =
         let path =
             match String.IsNullOrEmpty opts.Path with
-            | true -> Path.Combine(Directory.GetCurrentDirectory(), "resumaker.json")
+            | true ->
+                let path =
+                    Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "resumaker.json"))
+
+                if File.Exists path
+                then path
+                else raise (ArgumentException(sprintf """The "resumaker.json" file does not exist at "%s".""" path))
             | false ->
                 let path = Path.GetFullPath(opts.Path)
                 match path.EndsWith ".json", File.Exists(path) with
@@ -63,26 +69,34 @@ module Actions =
             JsonSerializer.Deserialize<ResumakerData>(file, jsonopts)
 
         let cwd = Path.GetDirectoryName path
-        match opts.Only |> Seq.length > 0 with
+
+        let customPath =
+            if String.IsNullOrEmpty opts.TemplatePath
+               && File.Exists opts.TemplatePath then
+                Some opts.TemplatePath
+            else
+                None
+
+        match opts.Language |> Seq.length > 0 with
         | true ->
-            [| for language in opts.Only do
+            [| for language in opts.Language do
                 data.ResumeList
-                |> Seq.find (fun resume -> resume.Language.ToLowerInvariant() = language.ToLowerInvariant()) |]
+                |> Seq.find (fun resume -> resume.Language.Name.ToLowerInvariant() = language.ToLowerInvariant()) |]
             |> Array.Parallel.map (fun resume ->
                 match opts.OutputType.ToLowerInvariant().Trim() with
-                | "html" -> generateHtml resume cwd
+                | "html" -> generateHtml resume cwd customPath
                 | _ ->
                     printfn "Warning: HTML is currently the only output"
-                    generateHtml resume cwd)
+                    generateHtml resume cwd customPath)
 
         | false ->
             data.ResumeList
             |> Seq.toArray
             |> Array.Parallel.map (fun resume ->
                 match opts.OutputType.ToLowerInvariant().Trim() with
-                | "html" -> generateHtml resume cwd
+                | "html" -> generateHtml resume cwd customPath
                 | _ ->
                     printfn "Warning: HTML is currently the only output"
-                    generateHtml resume cwd)
+                    generateHtml resume cwd customPath)
         |> ignore
         0
