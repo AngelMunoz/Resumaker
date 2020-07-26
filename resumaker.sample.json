@@ -10,7 +10,9 @@
                 "Keywords": {
                     "Skills": "Skills",
                     "PastExperience": "Past Experience",
-                    "Projects": "Projects"
+                    "Projects": "Projects",
+                    "DevLinks": "Dev Showcase",
+                    "SocialMedia": "Social Media"
                 }
             },
             "Profile": {
@@ -82,7 +84,9 @@
                 "Keywords": {
                     "Skills": "Habilidades",
                     "PastExperience": "Experiencia Anterior",
-                    "Projects": "Portafolio"
+                    "Projects": "Portafolio",
+                    "DevLinks": "Portafolios",
+                    "SocialMedia": "Redes Sociales"
                 }
             },
             "Profile": {
