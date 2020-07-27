@@ -176,7 +176,7 @@
             "examples": [
                 {
                     "Employer": "My Employer's Name",
-                    "Job Title": "Project Manager",
+                    "Title": "Project Manager",
                     "Summary": "What I accomplished there"
                 }
             ]
