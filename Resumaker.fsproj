@@ -8,7 +8,7 @@
     <Summary>
       Tired of fighting word when editing your resume? this might be for you
     </Summary>
-    <Version>0.1.0</Version>
+    <Version>0.3.0</Version>
     <Title>Resumaker</Title>
     <Authors>Angel D. Munoz</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>

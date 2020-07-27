@@ -9,6 +9,7 @@ module Types =
     [<CLIMutable>]
     type Project =
         { Name: string
+          Description: string
           ToolOrStack: seq<string>
           Url: string }
 

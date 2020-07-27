@@ -189,6 +189,12 @@
                     "type": "string",
                     "minLength": 0
                 },
+                "Description": {
+                    "description": "140 characters on what this project is and how cool was to build it",
+                    "type": "string",
+                    "minLength": 0,
+                    "maxLength": 140
+                },
                 "ToolOrStack": {
                     "description": "What did you use to make this happen?",
                     "type": "array",
@@ -204,12 +210,14 @@
             },
             "required": [
                 "Name",
+                "Description",
                 "ToolOrStack",
                 "Url"
             ],
             "examples": [
                 {
                     "Name": "My Cool Project",
+                    "Description": "140 characters on what this project is and how cool was to build it",
                     "ToolOrStack": [
                         "F#",
                         ".netcore"

@@ -52,6 +52,7 @@
             "Projects": [
                 {
                     "Name": "Hoenn Elite Four Ghost Team",
+                    "Description": "...",
                     "ToolOrStack": [
                         "Gengar",
                         "Chandelure",
@@ -64,6 +65,7 @@
                 },
                 {
                     "Name": "Galar Ghost GYM Team",
+                    "Description": "...",
                     "ToolOrStack": [
                         "Palosand",
                         "Alolan Marowak",
@@ -126,6 +128,7 @@
             "Projects": [
                 {
                     "Name": "Equipo de La elite pokemon de la region Hoenn",
+                    "Description": "...",
                     "ToolOrStack": [
                         "Gengar",
                         "Chandelure",
@@ -138,6 +141,7 @@
                 },
                 {
                     "Name": "Equipo del gimnasion fantasma de la region Galar",
+                    "Description": "...",
                     "ToolOrStack": [
                         "Palosand",
                         "Alolan Marowak",

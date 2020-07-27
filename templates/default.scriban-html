@@ -59,6 +59,11 @@
         .m-r-halfem {
             margin-right: 0.5em;
         }
+
+        .m-t-0,
+        .content .m-t-0 {
+            margin-top: 0px;
+        }
     </style>
 </head>
 
@@ -79,7 +84,7 @@
     </header>
     <main>
         <article class="flex-row content is-small">
-            <ul class=" m-r-halfem">
+            <ul class="m-r-halfem m-t-0">
                 <h3>{{ this.language.keywords['Skills'] }}</h3>
                 {{~ for tag in this.skills ~}}
                 <li>
@@ -99,11 +104,13 @@
                 {{~ end ~}}
                 <h3>{{ this.language.keywords['Projects'] }}</h3>
                 {{~ for project in this.projects ~}}
-                <article>
+                <article class="flex-column">
                     <h4>{{ project.name }}</h4>
-                    {{~ for tag in project.tool_or_stack ~}}
-                    <span class="tag">{{ tag }}</span>
-                    {{~ end ~}}
+                    <section>
+                        {{~ for tag in project.tool_or_stack ~}}
+                        <span class="tag">{{ tag }}</span>
+                        {{~ end ~}}
+                    </section>
                     <a href="{{ project.url }}" target="_blank" rel="noopener noreferrer">{{ project.url }}</a>
                 </article>
                 <hr>

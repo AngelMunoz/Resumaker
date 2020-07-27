@@ -71,8 +71,8 @@ module Actions =
         let cwd = Path.GetDirectoryName path
 
         let customPath =
-            if String.IsNullOrEmpty opts.TemplatePath
-               && File.Exists opts.TemplatePath then
+            if not (String.IsNullOrEmpty opts.TemplatePath)
+               && File.Exists(Path.GetFullPath(opts.TemplatePath)) then
                 Some opts.TemplatePath
             else
                 None
