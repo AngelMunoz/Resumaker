@@ -22,7 +22,12 @@ module Templates =
 
         template.Render(data)
 
-    let fromDisk (data: Resume) (filePath: string) = ""
+    let fromDisk (data: Resume) (filePath: string) =
+        let template =
+            let content = File.ReadAllText filePath
+            Template.Parse(content, sourceFilePath = filePath)
+
+        template.Render(data)
 
 [<RequireQualifiedAccess>]
 module Generator =
