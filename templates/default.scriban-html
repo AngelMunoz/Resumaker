@@ -55,6 +55,10 @@
         .m-1em {
             margin: 1em;
         }
+
+        .m-r-halfem {
+            margin-right: 0.5em;
+        }
     </style>
 </head>
 
@@ -73,26 +77,21 @@
             </p>
         </section>
     </header>
-    <hr>
     <main>
-        <article class="flex-row">
-            <aside class="menu">
-                <p class="menu-label">
-                    {{ this.language.keywords['Skills'] }}
-                </p>
-                <ul class="menu-list">
-                    {{~ for tag in this.skills ~}}
-                    <li>
-                        <a>{{tag.name}} - {{tag.experience}}</a>
-                    </li>
-                    {{~ end ~}}
-                </ul>
-            </aside>
-            <section class="content is-small">
+        <article class="flex-row content is-small">
+            <ul class=" m-r-halfem">
+                <h3>{{ this.language.keywords['Skills'] }}</h3>
+                {{~ for tag in this.skills ~}}
+                <li>
+                    <p>{{tag.name}} <br> <small>{{tag.experience}}</small></p>
+                </li>
+                {{~ end ~}}
+            </ul>
+            <section>
                 <h3>{{ this.language.keywords['PastExperience'] }}</h3>
                 {{~ for job in this.previous_jobs ~}}
                 <article>
-                    <h3>{{ job.title }}</h3>
+                    <h4>{{ job.title }}</h4>
                     <h5>{{ job.employer }}</h5>
                     <p>{{ job.summary }}</p>
                 </article>
@@ -101,7 +100,7 @@
                 <h3>{{ this.language.keywords['Projects'] }}</h3>
                 {{~ for project in this.projects ~}}
                 <article>
-                    <h3>{{ project.name }}</h3>
+                    <h4>{{ project.name }}</h4>
                     {{~ for tag in project.tool_or_stack ~}}
                     <span class="tag">{{ tag }}</span>
                     {{~ end ~}}
