@@ -16,7 +16,7 @@ Download the binary and put it on your PATH then start generating your resume, y
 This is also available as a dotnet global tool
 
 ```
-dotnet tool install --global Resumaker --version 0.3.0
+dotnet tool install --global Resumaker --version 0.3.1
 ```
 
 

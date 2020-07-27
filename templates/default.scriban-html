@@ -110,6 +110,7 @@
                         {{~ for tag in project.tool_or_stack ~}}
                         <span class="tag">{{ tag }}</span>
                         {{~ end ~}}
+                        <p>{{ project.description }}</p>
                     </section>
                     <a href="{{ project.url }}" target="_blank" rel="noopener noreferrer">{{ project.url }}</a>
                 </article>
