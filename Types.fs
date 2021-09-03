@@ -44,8 +44,8 @@ module Types =
     type InitOptions = { Path: string option }
 
     type GenerateOptions =
-        { Path: string option
-          Output: string option
+        { Config: string option
+          OutputDir: string option
           TemplatePath: string option
           Language: string seq }
 

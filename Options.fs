@@ -19,24 +19,24 @@ module Options =
 
     [<RequireQualifiedAccess>]
     type GenerateArgs =
-        | [<AltCommandLine("-p")>] Path of string option
-        | [<AltCommandLine("-o")>] Output of string option
+        | [<AltCommandLine("-c")>] Config of string option
+        | [<AltCommandLine("-o")>] Output_Dir of string option
         | [<AltCommandLine("-t")>] Template of string option
         | [<AltCommandLine("-l"); Last>] Language of string list
 
         interface IArgParserTemplate with
             member this.Usage: string =
                 match this with
-                | Path _ -> "Specify a path to the \"resumaker.json\" file."
-                | Output _ -> "Where should we put the resulting file."
+                | Config _ -> "Specify a path to the \"resumaker.json\" file."
+                | Output_Dir _ -> "Where should we put the resulting file."
                 | Template _ -> "The Full or relative file path to the custom template to use."
                 | Language _ ->
                     "A list of languages you want to generate your resume in, a json file for each specified language is required."
 
         static member GetOptions(results: ParseResults<GenerateArgs>) : GenerateOptions =
-            { Path = results.TryGetResult(Path) |> Option.flatten
-              Output = results.TryGetResult(Output) |> Option.flatten
-              TemplatePath = results.TryGetResult(Output) |> Option.flatten
+            { Config = results.TryGetResult(Config) |> Option.flatten
+              OutputDir = results.TryGetResult(Output_Dir) |> Option.flatten
+              TemplatePath = results.TryGetResult(Template) |> Option.flatten
               Language =
                   results.TryGetResult(Language)
                   |> Option.defaultValue List.empty }

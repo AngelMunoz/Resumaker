@@ -56,8 +56,8 @@ module Generator =
 
             let path =
                 match output with
-                | Some output -> Path.GetFullPath(output)
-                | None -> (Path.Combine(cwd, sprintf "Resume-%s.html" data.Language.Name))
+                | Some output -> Path.Combine(output, $"Resume-{data.Language.Name}.html")
+                | None -> Path.Combine(cwd, sprintf "Resume-%s.html" data.Language.Name)
 
             File.WriteAllText(path, html)
         }

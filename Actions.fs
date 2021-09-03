@@ -36,7 +36,7 @@ module Actions =
 
     let generate (opts: GenerateOptions) : Result<int, exn> =
         let path =
-            match opts.Path with
+            match opts.Config with
             | Some path -> Path.GetFullPath(path)
             | None -> Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "resumaker.json"))
 
@@ -54,12 +54,18 @@ module Actions =
         let cwd = Path.GetDirectoryName path
 
         result {
-            try
-                match opts.Output with
-                | Some output -> Directory.CreateDirectory(output) |> ignore
-                | None -> ()
-            with
-            | ex -> return! ex |> Error
+            let! outputPath =
+                result {
+                    try
+                        return
+                            match opts.OutputDir with
+                            | Some output ->
+                                let dir = Directory.CreateDirectory(output)
+                                Some dir.FullName
+                            | None -> None
+                    with
+                    | ex -> return! ex |> Error
+                }
 
             let results =
                 match opts.Language |> Seq.length > 0 with
@@ -68,12 +74,12 @@ module Actions =
                            data.ResumeList
                            |> Seq.find
                                (fun resume -> resume.Language.Name.ToLowerInvariant() = language.ToLowerInvariant()) |]
-                    |> Array.Parallel.map (fun resume -> Generator.html resume cwd opts.TemplatePath opts.Output)
+                    |> Array.Parallel.map (fun resume -> Generator.html resume cwd opts.TemplatePath outputPath)
 
                 | false ->
                     data.ResumeList
                     |> Seq.toArray
-                    |> Array.Parallel.map (fun resume -> Generator.html resume cwd opts.TemplatePath opts.Output)
+                    |> Array.Parallel.map (fun resume -> Generator.html resume cwd opts.TemplatePath outputPath)
 
             results
             |> Array.iter
@@ -87,5 +93,6 @@ module Actions =
                 |> Array.forall Result.isOk
                 |> Result.requireTrue (TemplateException "Failed to produce one or more of the templates")
 
+            printfn $"Your files are ready at \"{outputPath |> Option.defaultValue cwd}\"."
             return 0
         }
