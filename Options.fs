@@ -22,7 +22,7 @@ module Options =
         | [<AltCommandLine("-p")>] Path of string option
         | [<AltCommandLine("-o")>] Output of string option
         | [<AltCommandLine("-t")>] Template of string option
-        | [<AltCommandLine("-l")>] Language of (string seq) option
+        | [<AltCommandLine("-l"); Last>] Language of string list
 
         interface IArgParserTemplate with
             member this.Usage: string =
@@ -39,14 +39,11 @@ module Options =
               TemplatePath = results.TryGetResult(Output) |> Option.flatten
               Language =
                   results.TryGetResult(Language)
-                  |> Option.flatten
-                  |> Option.defaultValue Seq.empty }
+                  |> Option.defaultValue List.empty }
 
     type ResumakerArgs =
         | [<CliPrefix(CliPrefix.None)>] Init of ParseResults<InitArgs>
         | [<CliPrefix(CliPrefix.None)>] Generate of ParseResults<GenerateArgs>
-        | [<First; AltCommandLine("-h")>] Help of bool option
-        | [<First; AltCommandLine("-v")>] Version of bool option
 
         interface IArgParserTemplate with
             member this.Usage: string =
@@ -54,5 +51,3 @@ module Options =
                 | Init _ -> "Creates basic files and directories to start using resumaker."
                 | Generate _ ->
                     "Generates an HTML file with the contents of your resumaker.json file or files if you have multiple languages."
-                | Help _ -> "Prints the usage dialog."
-                | Version _ -> "Prints the tool version."

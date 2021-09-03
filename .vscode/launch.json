@@ -9,12 +9,23 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/bin/Debug/netcoreapp3.1/Resumaker.dll",
+            "program": "${workspaceFolder}/bin/Debug/net5.0/Resumaker.dll",
             "args": [
                 "generate",
                 "-p",
                 "./resumaker.sample.json"
             ],
+            "cwd": "${workspaceFolder}",
+            "stopAtEntry": false,
+            "console": "internalConsole"
+        },
+        {
+            "name": "Test Local No Args",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/bin/Debug/net5.0/Resumaker.dll",
+            "args": [],
             "cwd": "${workspaceFolder}",
             "stopAtEntry": false,
             "console": "internalConsole"

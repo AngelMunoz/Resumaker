@@ -19,53 +19,12 @@ let main argv =
                 try
                     parser.Parse argv |> Ok
                 with
-                | :? Argu.ArguParseException as ex -> CommandNotParsedException(ex.Message) |> Error
+                | :? Argu.ArguParseException as ex ->
+                    printfn "%s" (parser.PrintUsage())
+                    CommandNotParsedException(ex.Message) |> Error
 
 
-            let version =
-                parsed.TryGetResult(Version)
-                |> Option.map
-                    (fun opt ->
-                        if opt.IsNone then
-                            true
-                        else
-                            opt |> Option.defaultValue false)
-                |> Option.defaultValue false
-
-            if version then
-                printfn
-                    $"{System
-                           .Reflection
-                           .Assembly
-                           .GetEntryAssembly()
-                           .GetName()
-                           .Version.ToString()}"
-
-                return! Error VersionRequestedException
-
-            let help =
-                parsed.TryGetResult(Help)
-                |> Option.map
-                    (fun opt ->
-                        if opt.IsNone then
-                            true
-                        else
-                            opt |> Option.defaultValue false)
-                |> Option.defaultValue false
-
-            if help then
-                printfn "%s" (parser.PrintUsage())
-                return! Error HelpRequestedException
-
-
-            let cliArgs =
-                parsed.GetAllResults()
-                |> List.filter
-                    (fun result ->
-                        match result with
-                        | Version _
-                        | Help _ -> false
-                        | _ -> true)
+            let cliArgs = parsed.GetAllResults()
 
             match cliArgs with
             | [ Init subcmd ] -> return Init subcmd
@@ -76,10 +35,10 @@ let main argv =
     result {
         let! parsed = getCommand ()
 
-        match parsed with
-        | Init value -> return! Actions.init (InitArgs.GetOptions value)
-        | Generate value -> return! Actions.generate (GenerateArgs.GetOptions value)
-        | _ -> return 0
+        return!
+            match parsed with
+            | Init value -> Actions.init (InitArgs.GetOptions value)
+            | Generate value -> Actions.generate (GenerateArgs.GetOptions value)
     }
     |> fun result ->
         match result with
