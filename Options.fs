@@ -1,6 +1,7 @@
 namespace Resumaker
 
 open Argu
+open Types
 
 module Options =
 
@@ -13,12 +14,15 @@ module Options =
                 match this with
                 | Path _ -> "Where should the \"resumaker.json\" file be created."
 
+        static member GetOptions(results: ParseResults<InitArgs>) : InitOptions =
+            { Path = results.TryGetResult(Path) |> Option.flatten }
+
     [<RequireQualifiedAccess>]
     type GenerateArgs =
         | [<AltCommandLine("-p")>] Path of string option
         | [<AltCommandLine("-o")>] Output of string option
         | [<AltCommandLine("-t")>] Template of string option
-        | [<AltCommandLine("-l")>] Language of string seq
+        | [<AltCommandLine("-l")>] Language of (string seq) option
 
         interface IArgParserTemplate with
             member this.Usage: string =
@@ -28,6 +32,15 @@ module Options =
                 | Template _ -> "The Full or relative file path to the custom template to use."
                 | Language _ ->
                     "A list of languages you want to generate your resume in, a json file for each specified language is required."
+
+        static member GetOptions(results: ParseResults<GenerateArgs>) : GenerateOptions =
+            { Path = results.TryGetResult(Path) |> Option.flatten
+              Output = results.TryGetResult(Output) |> Option.flatten
+              TemplatePath = results.TryGetResult(Output) |> Option.flatten
+              Language =
+                  results.TryGetResult(Language)
+                  |> Option.flatten
+                  |> Option.defaultValue Seq.empty }
 
     type ResumakerArgs =
         | [<CliPrefix(CliPrefix.None)>] Init of ParseResults<InitArgs>

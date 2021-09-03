@@ -1,15 +1,17 @@
 namespace Resumaker
 
+open Types
+open Exceptions
+open System.IO
+open System.Text.Json
+open System.Reflection
+open FsToolkit.ErrorHandling
+
 [<RequireQualifiedAccess>]
 module Actions =
-    open Types
-    open Options
-    open System
-    open System.IO
-    open System.Text.Json
-    open System.Reflection
 
-    let init (opts: InitOptions) : int =
+    let init (opts: InitOptions) : Result<int, exn> =
+
         let templatePath =
             let dirname =
                 Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)
@@ -17,49 +19,26 @@ module Actions =
             Path.Combine(dirname, "resumaker.sample.json")
 
         printfn """Hi! thanks for using Resumaker. Creating "resumaker.json" file."""
-        let bytes = File.ReadAllBytes(templatePath)
 
-        match String.IsNullOrEmpty opts.Path with
-        | false ->
+        try
+            let bytes = File.ReadAllBytes(templatePath)
+
             let path =
-                Path.Combine(opts.Path, "resumaker.json")
+                match opts.Path with
+                | Some path -> Path.GetFullPath(path)
+                | None -> Path.Combine(Directory.GetCurrentDirectory(), "resumaker.json")
 
             File.WriteAllBytes(path, bytes)
             printfn """Wrote "resumaker.json" file at "%s".""" path
-        | true ->
-            let path =
-                Path.Combine(Directory.GetCurrentDirectory(), "resumaker.json")
+            Ok 0
+        with
+        | ex -> ex.Message |> TemplateException |> Error
 
-            File.WriteAllBytes(path, bytes)
-            printfn """Wrote "resumaker.json" file at "%s".""" path
-
-        0
-
-
-    let generateHtml (resume: Resume) (cwd: string) = Generator.html resume cwd
-
-    let generate (opts: GenerateOptions) : int =
+    let generate (opts: GenerateOptions) : Result<int, exn> =
         let path =
-            match String.IsNullOrEmpty opts.Path with
-            | true ->
-                let path =
-                    Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "resumaker.json"))
-
-                if File.Exists path then
-                    path
-                else
-                    raise (ArgumentException(sprintf """The "resumaker.json" file does not exist at "%s".""" path))
-            | false ->
-                let path = Path.GetFullPath(opts.Path)
-
-                match path.EndsWith ".json", File.Exists(path) with
-                | true, true -> path
-                | false, true ->
-                    Directory.GetFiles(path, "resumaker.json")
-                    |> Seq.head
-                | true, false
-                | false, false ->
-                    raise (ArgumentException(sprintf """The "resumaker.json" file does not exist at "%s".""" path))
+            match opts.Path with
+            | Some path -> Path.GetFullPath(path)
+            | None -> Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "resumaker.json"))
 
         let file = File.ReadAllText path
 
@@ -73,38 +52,25 @@ module Actions =
 
         let cwd = Path.GetDirectoryName path
 
-        let customPath =
-            if
-                not (String.IsNullOrEmpty opts.TemplatePath)
-                && File.Exists(Path.GetFullPath(opts.TemplatePath))
-            then
-                Some opts.TemplatePath
-            else
-                None
+        result {
+            let results =
+                match opts.Language |> Seq.length > 0 with
+                | true ->
+                    [| for language in opts.Language do
+                           data.ResumeList
+                           |> Seq.find
+                               (fun resume -> resume.Language.Name.ToLowerInvariant() = language.ToLowerInvariant()) |]
+                    |> Array.Parallel.map (fun resume -> Generator.html resume cwd opts.TemplatePath opts.Output)
 
-        match opts.Language |> Seq.length > 0 with
-        | true ->
-            [| for language in opts.Language do
-                   data.ResumeList
-                   |> Seq.find (fun resume -> resume.Language.Name.ToLowerInvariant() = language.ToLowerInvariant()) |]
-            |> Array.Parallel.map
-                (fun resume ->
-                    match opts.Output.ToLowerInvariant().Trim() with
-                    | "html" -> generateHtml resume cwd customPath
-                    | _ ->
-                        printfn "Warning: HTML is currently the only output"
-                        generateHtml resume cwd customPath)
+                | false ->
+                    data.ResumeList
+                    |> Seq.toArray
+                    |> Array.Parallel.map (fun resume -> Generator.html resume cwd opts.TemplatePath opts.Output)
 
-        | false ->
-            data.ResumeList
-            |> Seq.toArray
-            |> Array.Parallel.map
-                (fun resume ->
-                    match opts.Output.ToLowerInvariant().Trim() with
-                    | "html" -> generateHtml resume cwd customPath
-                    | _ ->
-                        printfn "Warning: HTML is currently the only output"
-                        generateHtml resume cwd customPath)
-        |> ignore
+            do!
+                results
+                |> Array.forall Result.isOk
+                |> Result.requireTrue (TemplateException "")
 
-        0
+            return 0
+        }

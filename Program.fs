@@ -67,18 +67,15 @@ let main argv =
             match cliArgs with
             | [ Init subcmd ] -> return Init subcmd
             | [ Generate subcmd ] -> return Generate subcmd
-            | args ->
-                return!
-                    CommandNotParsedException $"%A{args}"
-                    |> Result.Error
+            | args -> return! CommandNotParsedException $"%A{args}" |> Error
         }
 
     result {
         let! parsed = getCommand ()
 
         match parsed with
-        | Init value -> return 0
-        | Generate value -> return 0
+        | Init value -> return! Actions.init (InitArgs.GetOptions value)
+        | Generate value -> return! Actions.generate (GenerateArgs.GetOptions value)
         | _ -> return 0
     }
     |> fun result ->

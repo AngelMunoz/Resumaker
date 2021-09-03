@@ -41,15 +41,16 @@ module Types =
 
     type ResumakerData = { ResumeList: Resume seq }
 
-    type InitOptions = { Path: string }
+    type InitOptions = { Path: string option }
 
     type GenerateOptions =
-        { Path: string
-          Output: string
-          TemplatePath: string
+        { Path: string option
+          Output: string option
+          TemplatePath: string option
           Language: string seq }
 
 module Exceptions =
     exception CommandNotParsedException of string
+    exception TemplateException of string
     exception VersionRequestedException
     exception HelpRequestedException
