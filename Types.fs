@@ -3,26 +3,21 @@ namespace Resumaker
 open System.Collections.Generic
 
 module Types =
-    [<CLIMutable>]
     type Link = { Name: string; Url: string }
 
-    [<CLIMutable>]
     type Project =
         { Name: string
           Description: string
-          ToolOrStack: seq<string>
+          ToolOrStack: string seq
           Url: string }
 
-    [<CLIMutable>]
     type Job =
         { Employer: string
           Title: string
           Summary: string }
 
-    [<CLIMutable>]
     type Skill = { Name: string; Experience: string }
 
-    [<CLIMutable>]
     type Profile =
         { Name: string
           LastName: string
@@ -31,20 +26,25 @@ module Types =
           Picture: string
           Email: string }
 
-    [<CLIMutable>]
     type Language =
         { Name: string
           Keywords: IDictionary<string, string> }
 
-    [<CLIMutable>]
     type Resume =
         { Language: Language
           Profile: Profile
-          Skills: seq<Skill>
-          PreviousJobs: seq<Job>
-          Projects: seq<Project>
-          DevLinks: seq<Link>
-          SocialMedia: seq<Link> }
+          Skills: Skill seq
+          PreviousJobs: Job seq
+          Projects: Project seq
+          DevLinks: Link seq
+          SocialMedia: Link seq }
 
-    [<CLIMutable>]
-    type ResumakerData = { ResumeList: seq<Resume> }
+    type ResumakerData = { ResumeList: Resume seq }
+
+    type InitOptions = { Path: string }
+
+    type GenerateOptions =
+        { Path: string
+          OutputType: string
+          TemplatePath: string
+          Language: string seq }

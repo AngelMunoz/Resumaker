@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
      <Description>
       A simple resume maker tool which takes some json and outputs html
     </Description>
@@ -16,7 +16,6 @@
     <RepositoryUrl>https://github.com/AngelMunoz/Resumaker.git</RepositoryUrl>
     <PackAsTool>true</PackAsTool>
     <ToolCommandName>resumaker</ToolCommandName>
-    <PackageOutputPath>./dist/tool</PackageOutputPath>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Types.fs" />
@@ -29,14 +28,14 @@
     <Content Include=".\resumaker.sample.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include=".\templates\*.scriban-html">
+    <Content Include=".\templates\*.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="CommandLineParser" Version="2.8.0" />
-    <PackageReference Include="CommandLineParser.FSharp" Version="2.8.0" />
-    <PackageReference Include="Scriban" Version="2.1.3" />
-    <PackageReference Include="System.Text.Json" Version="4.7.2" />
+    <PackageReference Include="Argu" Version="6.1.1" />
+    <PackageReference Include="FsToolkit.ErrorHandling" Version="2.7.0" />
+    <PackageReference Include="FsToolkit.ErrorHandling.TaskResult" Version="2.7.0" />
+    <PackageReference Include="Scriban" Version="4.0.1" />
   </ItemGroup>
 </Project>

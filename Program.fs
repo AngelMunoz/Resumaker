@@ -1,16 +1,13 @@
 // Learn more about F# at http://docs.microsoft.com/dotnet/fsharp
 
-open CommandLine
 open Resumaker
 open Resumaker.Options
 open System
-open System.IO
-open System.Diagnostics
-
 
 [<EntryPoint>]
 let main argv =
-    let result = Parser.Default.ParseArguments<InitOptions, GenerateOptions>(argv)
+    let result =
+        Parser.Default.ParseArguments<InitOptions, GenerateOptions>(argv)
 
     match result with
     | :? (Parsed<obj>) as parsed ->
@@ -27,6 +24,7 @@ let main argv =
             | :? FileNotFoundException as fn ->
                 eprintfn
                     "We couldn't find the file that was requested please ensure 'resumaker.json' file exists at the selected path"
+
                 Debug.WriteLine(sprintf "%O" fn)
                 3
             | :? PathTooLongException as pt ->
@@ -36,7 +34,8 @@ let main argv =
         | :? GenerateOptions as opts ->
             try
                 Actions.generate opts
-            with :? ArgumentException as ex ->
+            with
+            | :? ArgumentException as ex ->
                 eprintfn "%s" ex.Message
                 3
         | somethingelse ->
@@ -44,8 +43,10 @@ let main argv =
             3
     | :? (NotParsed<obj>) as notParsed ->
         Debug.WriteLine("Not Parsed Errors:")
+
         for err in notParsed.Errors do
             Debug.WriteLine(sprintf "\t%A %b" err.Tag err.StopsProcessing)
+
         2
     | somethingelse ->
         Debug.WriteLine(sprintf "%O" somethingelse)

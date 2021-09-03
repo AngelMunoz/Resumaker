@@ -1,15 +1,26 @@
 namespace Resumaker
 
+open Argu
+
 module Options =
-    open CommandLine
+
+    [<RequireQualifiedAccess>]
+    type InitArgs =
+        | [<AltCommandLine("-p")>] Path of string option
+
+        interface IArgParserTemplate with
+            member this.Usage: string =
+                match this with
+                | Path _ -> "Where should the \"resumaker.json\" file be created."
+
+
 
     [<Verb("init", HelpText = "Creates basic files and directories to start using resumaker.")>]
     type InitOptions =
         { [<Option('p',
                    "path",
                    Required = false,
-                   HelpText =
-                       "Where should the resumaker.json should be created defaults to wherever the binary has been executed")>]
+                   HelpText = "Where should the resumaker.json should be created defaults to wherever the binary has been executed")>]
           Path: string }
 
     [<Verb("generate", HelpText = "Generates a resume for each lang you have inside the resumaker.json file")>]
