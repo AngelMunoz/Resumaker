@@ -25,7 +25,7 @@ module Templates =
 
                 return template.Render(data)
             with
-            | ex -> return! ex.Message |> TemplateException |> Error
+            | ex -> return! ex |> Error
         }
 
 
@@ -37,7 +37,7 @@ module Templates =
 
             template.Render(data) |> Ok
         with
-        | ex -> ex.Message |> TemplateException |> Error
+        | ex -> ex |> Error
 
 [<RequireQualifiedAccess>]
 module Generator =

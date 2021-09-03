@@ -16,12 +16,16 @@ let main argv =
                 | ex -> CommandNotParsedException(ex.Message) |> Error
 
             let! parsed =
-                try
-                    parser.Parse argv |> Ok
-                with
-                | :? Argu.ArguParseException as ex ->
-                    printfn "%s" (parser.PrintUsage())
-                    CommandNotParsedException(ex.Message) |> Error
+                result {
+                    try
+                        if argv.Length = 0 then
+                            printfn "%s" (parser.PrintUsage())
+                            return! Error(HelpRequestedException)
+
+                        return parser.Parse argv
+                    with
+                    | ex -> return! Error ex
+                }
 
 
             let cliArgs = parsed.GetAllResults()
@@ -47,6 +51,9 @@ let main argv =
             match ex with
             | VersionRequestedException
             | HelpRequestedException -> 0
+            | TemplateException msg ->
+                printfn "%s" msg
+                0
             | ex ->
                 printfn "%O" ex
                 1

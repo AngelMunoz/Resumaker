@@ -32,7 +32,7 @@ module Actions =
             printfn """Wrote "resumaker.json" file at "%s".""" path
             Ok 0
         with
-        | ex -> ex.Message |> TemplateException |> Error
+        | ex -> ex |> Error
 
     let generate (opts: GenerateOptions) : Result<int, exn> =
         let path =
@@ -41,6 +41,7 @@ module Actions =
             | None -> Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "resumaker.json"))
 
         let file = File.ReadAllText path
+
 
         let data =
             let jsonopts = JsonSerializerOptions()
@@ -53,6 +54,13 @@ module Actions =
         let cwd = Path.GetDirectoryName path
 
         result {
+            try
+                match opts.Output with
+                | Some output -> Directory.CreateDirectory(output) |> ignore
+                | None -> ()
+            with
+            | ex -> return! ex |> Error
+
             let results =
                 match opts.Language |> Seq.length > 0 with
                 | true ->
@@ -67,10 +75,17 @@ module Actions =
                     |> Seq.toArray
                     |> Array.Parallel.map (fun resume -> Generator.html resume cwd opts.TemplatePath opts.Output)
 
+            results
+            |> Array.iter
+                (fun r ->
+                    match r with
+                    | Error err -> eprintfn "%s" err.Message
+                    | _ -> ())
+
             do!
                 results
                 |> Array.forall Result.isOk
-                |> Result.requireTrue (TemplateException "")
+                |> Result.requireTrue (TemplateException "Failed to produce one or more of the templates")
 
             return 0
         }
