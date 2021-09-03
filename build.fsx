@@ -59,7 +59,7 @@ Target.create
                 { opts with
                       Configuration = DotNet.BuildConfiguration.Release
                       OutputPath = Some $"{output}" })
-            "src/Migrondi")
+            "Resumaker.fsproj")
 
 Target.create
     "Zip"

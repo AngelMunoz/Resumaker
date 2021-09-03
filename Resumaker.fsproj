@@ -1,14 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
      <Description>
       A simple resume maker tool which takes some json and outputs html
     </Description>
     <Summary>
       Tired of fighting word when editing your resume? this might be for you
     </Summary>
-    <Version>0.3.1</Version>
+    <Version>0.4.0</Version>
     <Title>Resumaker</Title>
     <Authors>Angel D. Munoz</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
