@@ -2,7 +2,20 @@
 
 # Resumaker CLI
 
-![Resumaker CLI](./resumaker-cli.png)
+```
+USAGE: Resumaker [--help] [<subcommand> [<options>]]
+
+SUBCOMMANDS:
+
+    init <options>        Creates basic files and directories to start using resumaker.
+    generate <options>    Generates an HTML file with the contents of your resumaker.json file or files if you have multiple languages.
+
+    Use 'Resumaker.exe <subcommand> --help' for additional information.
+
+OPTIONS:
+
+    --help                display this list of options.
+```
 
 ## Usage
 
@@ -10,7 +23,22 @@
 
 Download the binary and put it on your PATH then start generating your resume, you can also get help on the commands just execute
 `resumaker help generate` that should show you the following text
-![Resumaker CLI](./generate-help.png)
+
+```
+USAGE: Resumaker.exe generate [--help] [--config [<string>]] [--output-dir [<string>]] [--template [<string>]] [--language [<string>...]]
+
+OPTIONS:
+
+    --config, -c [<string>]
+                          Specify a path to the "resumaker.json" file.
+    --output-dir, -o [<string>]
+                          Where should we put the resulting files.
+    --template, -t [<string>]
+                          The Full or relative file path to the custom template to use.
+    --language, -l [<string>...]
+                          A list of languages you want to generate your resume in, a json file for each specified language is required.
+    --help                display this list of options.
+```
 
 ### .Net tool
 
