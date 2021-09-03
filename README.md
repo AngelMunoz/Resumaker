@@ -41,7 +41,7 @@ Specially if you are generating an HTML file which sets the Language of the html
 
 ## Custom Templates
 
-If you are fancier than me, you can use a custom template if you specify the flag `-t|--template` when you use the `generate` command for the templating language I used [Scriban] which is quite fast and very simple to use, check the [default.scriban-html](https://github.com/AngelMunoz/Resumaker/blob/master/templates/default.scriban-html) file to base any template you might want to customize
+If you are fancier than me, you can use a custom template if you specify the flag `-t|--template` when you use the `generate` command for the templating language I used [Scriban] which is quite fast and very simple to use, check the [default.html](https://github.com/AngelMunoz/Resumaker/blob/master/templates/default.html) file to base any template you might want to customize
 
 ### Notes and Variables
 
