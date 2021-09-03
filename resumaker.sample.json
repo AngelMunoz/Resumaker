@@ -12,7 +12,8 @@
                     "PastExperience": "Past Experience",
                     "Projects": "Projects",
                     "DevLinks": "Dev Showcase",
-                    "SocialMedia": "Social Media"
+                    "SocialMedia": "Social Media",
+                    "ProjectWebsite": "Project Website"
                 }
             },
             "Profile": {
@@ -88,7 +89,8 @@
                     "PastExperience": "Experiencia Anterior",
                     "Projects": "Portafolio",
                     "DevLinks": "Portafolios",
-                    "SocialMedia": "Redes Sociales"
+                    "SocialMedia": "Redes Sociales",
+                    "ProjectWebsite": "Web del proyecto"
                 }
             },
             "Profile": {

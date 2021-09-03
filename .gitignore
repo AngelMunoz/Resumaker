@@ -365,3 +365,5 @@ FodyWeavers.xsd
 [rR]esume*.html
 
 dist/
+public/
+.compressed/

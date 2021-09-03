@@ -1,142 +1,225 @@
 <!DOCTYPE html>
 <html lang="{{this.language.name}}">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{ this.profile.name + " " + this.profile.last_name }}</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
+    <link
+      rel="stylesheet"
+      media="(prefers-color-scheme:light)"
+      href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.50/dist/themes/light.css"
+    />
+    <link
+      rel="stylesheet"
+      media="(prefers-color-scheme:dark)"
+      href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.50/dist/themes/dark.css"
+      onload="document.documentElement.classList.add('sl-theme-dark');"
+    />
+    <script
+      type="module"
+      src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.50/dist/shoelace.js"
+    ></script>
     <style>
+      :not(:defined) {
+        visibility: hidden;
+      }
+
+      html,
+      body {
+        height: 100%;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        display: flex;
+        flex-direction: column;
+        margin: 0;
+        padding: 0.5em;
+      }
+
+      article {
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+      }
+      header {
+        display: flex;
+        justify-content: space-between;
+        height: 240px;
+        text-align: center;
+      }
+
+      header figure {
+        margin: 0;
+        padding: 0;
+        height: 240px;
+        width: 240px;
+      }
+
+      header figure img {
+        object-fit: contain;
+        height: 222px;
+        width: 222px;
+      }
+
+      .intro {
+        margin: auto;
+      }
+
+      main {
+        display: grid;
+        grid-template-areas:
+          "aside header1"
+          "aside previous"
+          "aside header2"
+          "aside projects";
+        grid-template-columns: 164px 1fr;
+        grid-template-rows: 2em 1fr 2em 1fr;
+      }
+      aside {
+        grid-area: aside;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .title {
+        font-size: large;
+        font-weight: bold;
+        text-align: center;
+      }
+      .text-start {
+        text-align: start;
+      }
+
+      .header1 {
+        grid-area: header1;
+      }
+      .header2 {
+        grid-area: header2;
+      }
+
+      .previous {
+        grid-area: previous;
+        display: flex;
+        justify-content: space-evenly;
+        flex-wrap: wrap;
+      }
+      .projects {
+        grid-area: projects;
+        display: flex;
+        justify-content: space-evenly;
+        flex-wrap: wrap;
+      }
+
+      sl-card {
+        width: 320px;
+      }
+
+      @media (prefers-color-scheme: dark) {
         html,
         body {
-            height: 100%;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-            display: flex;
-            flex-direction: column;
-            margin: 0;
-            padding: 0;
+          background-color: #0c0c0c;
+          color: #c0c0c0;
         }
-
-        body {
-            padding: 1.5em;
-        }
-
-        .flex-row {
-            display: flex;
-            flex-direction: row;
-        }
-
-        .flex-column {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .spaced-even {
-            justify-content: space-evenly;
-        }
-
-        .row-wrap {
-            flex-wrap: wrap;
-        }
-
-        .v-center {
-            align-content: center;
-        }
-
-        .h-center {
-            justify-content: center;
-            text-align: center;
-        }
-
-        .m-auto {
-            margin: auto;
-        }
-
-        .m-1em {
-            margin: 1em;
-        }
-
-        .m-r-halfem {
-            margin-right: 0.5em;
-        }
-
-        .m-t-0,
-        .content .m-t-0 {
-            margin-top: 0px;
-        }
+      }
     </style>
-</head>
+  </head>
 
-<body>
-    <header class="flex-row spaced-even v-center">
-        <figure class="image is-128x128">
-            <img src="{{this.profile.picture}}" alt='{{ this.profile.name + " " + this.profile.last_name }}' />
+  <body>
+    <article>
+      <header>
+        <figure>
+          <img
+            src="{{this.profile.picture}}"
+            alt='{{ this.profile.name + " " + this.profile.last_name }}'
+          />
         </figure>
-        <section class="flex-column h-center content is-small">
-            <p>{{- this.profile.name }} {{- this.profile.last_name }}</p>
-            <p>{{- this.profile.objectives }}</p>
-            <p>{{- this.profile.personal_summary }}</p>
-            <p>
-                <a href="mailto:{{- this.profile.email }}" target="_blank"
-                    rel="noopener noreferrer">{{- this.profile.email }}</a>
-            </p>
+        <section class="intro">
+          <p class="title">
+            {{- this.profile.name }} {{- this.profile.last_name }}
+          </p>
+          <p>{{- this.profile.objectives }}</p>
+          <p>{{- this.profile.personal_summary }}</p>
+          <p>
+            <sl-button
+              type="text"
+              size="large"
+              href="mailto:{{- this.profile.email }}"
+              target="_blank"
+            >
+              {{- this.profile.email }}
+            </sl-button>
+          </p>
         </section>
-    </header>
-    <main>
-        <article class="flex-row content is-small">
-            <ul class="m-r-halfem m-t-0">
-                <h3>{{ this.language.keywords['Skills'] }}</h3>
-                {{~ for tag in this.skills ~}}
-                <li>
-                    <p>{{tag.name}} <br> <small>{{tag.experience}}</small></p>
-                </li>
-                {{~ end ~}}
-            </ul>
-            <section>
-                <h3>{{ this.language.keywords['PastExperience'] }}</h3>
-                {{~ for job in this.previous_jobs ~}}
-                <article>
-                    <h4>{{ job.title }}</h4>
-                    <h5>{{ job.employer }}</h5>
-                    <p>{{ job.summary }}</p>
-                </article>
-                <hr>
-                {{~ end ~}}
-                <h3>{{ this.language.keywords['Projects'] }}</h3>
-                {{~ for project in this.projects ~}}
-                <article class="flex-column">
-                    <h4>{{ project.name }}</h4>
-                    <section>
-                        {{~ for tag in project.tool_or_stack ~}}
-                        <span class="tag">{{ tag }}</span>
-                        {{~ end ~}}
-                        <p>{{ project.description }}</p>
-                    </section>
-                    <a href="{{ project.url }}" target="_blank" rel="noopener noreferrer">{{ project.url }}</a>
-                </article>
-                <hr>
-                {{~ end ~}}
-            </section>
-        </article>
-    </main>
-    <footer class="flex-row v-center h-center is-small spaced-even">
-        <section class="m-auto">
-            <h4>{{ this.language.keywords['DevLinks'] }}</h4>
-            <ul class="flex-row spaced-even">
-                {{~ for link in this.dev_links ~}}
-                <li class="m-1em"><a href="{{ link.url }}">{{link.name}}</a></li>
-                {{~ end ~}}
-            </ul>
+      </header>
+      <main>
+        <aside>
+          <h4>{{ this.language.keywords['Skills'] }}</h4>
+          {{~ for tag in this.skills ~}}
+          <sl-button type="text" size="small"
+            >{{tag.name}} - <small>{{tag.experience}}</small></sl-button
+          >
+          {{~ end ~}}
+          <h4>{{ this.language.keywords['DevLinks'] }}</h4>
+          {{~ for link in this.dev_links ~}}
+          <sl-button
+            type="text"
+            size="small"
+            href="{{ link.url }}"
+            target="_blank"
+          >
+            {{link.name}}
+          </sl-button>
+          {{~ end ~}}
+          <h4>{{ this.language.keywords['SocialMedia'] }}</h4>
+          {{~ for link in this.social_media ~}}
+          <sl-button
+            type="text"
+            size="small"
+            href="{{ link.url }}"
+            target="_blank"
+          >
+            {{link.name}}
+          </sl-button>
+          {{~ end ~}}
+        </aside>
+        <div class="header1 title">
+          {{ this.language.keywords['PastExperience'] }}
+        </div>
+        <section class="previous">
+          {{~ for job in this.previous_jobs ~}}
+          <sl-card>
+            <div slot="header">
+              <strong>{{ job.employer }}</strong> - {{ job.title }}
+            </div>
+            <p>{{job.summary}}</p>
+          </sl-card>
+          {{~ end ~}}
         </section>
-        <section class="m-auto">
-            <h4>{{ this.language.keywords['SocialMedia'] }}</h4>
-            <ul class="flex-row spaced-even">
-                {{~ for link in this.social_media ~}}
-                <li class="m-1em"><a href="{{ link.url }}">{{link.name}}</a></li>
-                {{~ end ~}}
-            </ul>
+        <div class="header2 title">
+          {{ this.language.keywords['Projects'] }}
+        </div>
+        <section class="projects">
+          {{~ for project in this.projects ~}}
+          <sl-card>
+            <div slot="header">
+              <strong>{{ project.name }}</strong>
+            </div>
+            {{~ for tag in project.tool_or_stack ~}}
+            <sl-tag type="neutral">{{ tag }}</sl-tag>
+            {{~ end ~}}
+            <p>{{ project.description }}</p>
+            <div slot="footer">
+              <sl-button
+                pill
+                type="primary"
+                href="{{ project.url }}"
+                target="_blank"
+                >{{ this.language.keywords['ProjectWebsite'] }}</sl-button
+              >
+            </div>
+          </sl-card>
+          {{~ end ~}}
         </section>
-    </footer>
-</body>
-
+      </main>
+    </article>
+  </body>
 </html>
