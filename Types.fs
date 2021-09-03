@@ -45,6 +45,11 @@ module Types =
 
     type GenerateOptions =
         { Path: string
-          OutputType: string
+          Output: string
           TemplatePath: string
           Language: string seq }
+
+module Exceptions =
+    exception CommandNotParsedException of string
+    exception VersionRequestedException
+    exception HelpRequestedException

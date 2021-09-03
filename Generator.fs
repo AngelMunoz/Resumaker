@@ -14,7 +14,7 @@ module Templates =
             let dir =
                 Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)
 
-            Path.Combine(dir, "templates", "default.scriban-html")
+            Path.Combine(dir, "templates", "default.html")
 
         let template =
             let content = File.ReadAllText path

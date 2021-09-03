@@ -1,53 +1,91 @@
 // Learn more about F# at http://docs.microsoft.com/dotnet/fsharp
-
+open Argu
 open Resumaker
+open Resumaker.Types
+open Resumaker.Exceptions
 open Resumaker.Options
-open System
+open FsToolkit.ErrorHandling
 
 [<EntryPoint>]
 let main argv =
-    let result =
-        Parser.Default.ParseArguments<InitOptions, GenerateOptions>(argv)
+    let getCommand () : Result<ResumakerArgs, exn> =
+        result {
+            let parser = ArgumentParser.Create<ResumakerArgs>()
 
-    match result with
-    | :? (Parsed<obj>) as parsed ->
-        match parsed.Value with
-        | :? InitOptions as opts ->
-            try
-                Actions.init opts
-            with
-            | :? UnauthorizedAccessException as un ->
-                eprintfn "Failed to read/write to disk due to user permissions"
-                eprintfn "Ensure you have read/write access to the selected directory"
-                Debug.WriteLine(sprintf "%O" un)
-                3
-            | :? FileNotFoundException as fn ->
-                eprintfn
-                    "We couldn't find the file that was requested please ensure 'resumaker.json' file exists at the selected path"
+            let! parsed =
+                try
+                    parser.Parse argv |> Ok
+                with
+                | :? Argu.ArguParseException as ex -> CommandNotParsedException(ex.Message) |> Error
 
-                Debug.WriteLine(sprintf "%O" fn)
-                3
-            | :? PathTooLongException as pt ->
-                eprintfn "Selected path is out of the system allowed range"
-                Debug.WriteLine(sprintf "%O" pt)
-                3
-        | :? GenerateOptions as opts ->
-            try
-                Actions.generate opts
-            with
-            | :? ArgumentException as ex ->
-                eprintfn "%s" ex.Message
-                3
-        | somethingelse ->
-            Debug.WriteLine(sprintf "%O" somethingelse)
-            3
-    | :? (NotParsed<obj>) as notParsed ->
-        Debug.WriteLine("Not Parsed Errors:")
 
-        for err in notParsed.Errors do
-            Debug.WriteLine(sprintf "\t%A %b" err.Tag err.StopsProcessing)
+            let version =
+                parsed.TryGetResult(Version)
+                |> Option.map
+                    (fun opt ->
+                        if opt.IsNone then
+                            true
+                        else
+                            opt |> Option.defaultValue false)
+                |> Option.defaultValue false
 
-        2
-    | somethingelse ->
-        Debug.WriteLine(sprintf "%O" somethingelse)
-        3
+            if version then
+                printfn
+                    $"{System
+                           .Reflection
+                           .Assembly
+                           .GetEntryAssembly()
+                           .GetName()
+                           .Version.ToString()}"
+
+                return! Error VersionRequestedException
+
+            let help =
+                parsed.TryGetResult(Help)
+                |> Option.map
+                    (fun opt ->
+                        if opt.IsNone then
+                            true
+                        else
+                            opt |> Option.defaultValue false)
+                |> Option.defaultValue false
+
+            if help then
+                printfn "%s" (parser.PrintUsage())
+                return! Error HelpRequestedException
+
+
+            let cliArgs =
+                parsed.GetAllResults()
+                |> List.filter
+                    (fun result ->
+                        match result with
+                        | Version _
+                        | Help _ -> false
+                        | _ -> true)
+
+            match cliArgs with
+            | [ Init subcmd ] -> return Init subcmd
+            | [ Generate subcmd ] -> return Generate subcmd
+            | args ->
+                return!
+                    CommandNotParsedException $"%A{args}"
+                    |> Result.Error
+        }
+
+    result {
+        let! parsed = getCommand ()
+
+        match parsed with
+        | Init value -> return 0
+        | Generate value -> return 0
+        | _ -> return 0
+    }
+    |> fun result ->
+        match result with
+        | Ok exitCode -> exitCode
+        | Error ex ->
+            match ex with
+            | VersionRequestedException
+            | HelpRequestedException -> 0
+            | _ -> 1

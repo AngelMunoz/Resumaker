@@ -13,30 +13,33 @@ module Options =
                 match this with
                 | Path _ -> "Where should the \"resumaker.json\" file be created."
 
+    [<RequireQualifiedAccess>]
+    type GenerateArgs =
+        | [<AltCommandLine("-p")>] Path of string option
+        | [<AltCommandLine("-o")>] Output of string option
+        | [<AltCommandLine("-t")>] Template of string option
+        | [<AltCommandLine("-l")>] Language of string seq
 
+        interface IArgParserTemplate with
+            member this.Usage: string =
+                match this with
+                | Path _ -> "Specify a path to the \"resumaker.json\" file."
+                | Output _ -> "Where should we put the resulting file."
+                | Template _ -> "The Full or relative file path to the custom template to use."
+                | Language _ ->
+                    "A list of languages you want to generate your resume in, a json file for each specified language is required."
 
-    [<Verb("init", HelpText = "Creates basic files and directories to start using resumaker.")>]
-    type InitOptions =
-        { [<Option('p',
-                   "path",
-                   Required = false,
-                   HelpText = "Where should the resumaker.json should be created defaults to wherever the binary has been executed")>]
-          Path: string }
+    type ResumakerArgs =
+        | [<CliPrefix(CliPrefix.None)>] Init of ParseResults<InitArgs>
+        | [<CliPrefix(CliPrefix.None)>] Generate of ParseResults<GenerateArgs>
+        | [<First; AltCommandLine("-h")>] Help of bool option
+        | [<First; AltCommandLine("-v")>] Version of bool option
 
-    [<Verb("generate", HelpText = "Generates a resume for each lang you have inside the resumaker.json file")>]
-    type GenerateOptions =
-        { [<Option('p', "path", Required = false, HelpText = "Specify a path to the resumaker.json file")>]
-          Path: string
-          [<Option('o',
-                   "output",
-                   Required = false,
-                   HelpText = "Type of the produced output (Html for the moment)",
-                   Default = "html")>]
-          OutputType: string
-          [<Option('t',
-                   "template",
-                   Required = false,
-                   HelpText = "the file path to the custom template to use for generation")>]
-          TemplatePath: string
-          [<Option('l', "language", Required = false, HelpText = "Create only the specified language resume")>]
-          Language: seq<string> }
+        interface IArgParserTemplate with
+            member this.Usage: string =
+                match this with
+                | Init _ -> "Creates basic files and directories to start using resumaker."
+                | Generate _ ->
+                    "Generates an HTML file with the contents of your resumaker.json file or files if you have multiple languages."
+                | Help _ -> "Prints the usage dialog."
+                | Version _ -> "Prints the tool version."
