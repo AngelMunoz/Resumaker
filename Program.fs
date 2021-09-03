@@ -1,7 +1,6 @@
 // Learn more about F# at http://docs.microsoft.com/dotnet/fsharp
 open Argu
 open Resumaker
-open Resumaker.Types
 open Resumaker.Exceptions
 open Resumaker.Options
 open FsToolkit.ErrorHandling
@@ -10,7 +9,11 @@ open FsToolkit.ErrorHandling
 let main argv =
     let getCommand () : Result<ResumakerArgs, exn> =
         result {
-            let parser = ArgumentParser.Create<ResumakerArgs>()
+            let! parser =
+                try
+                    ArgumentParser.Create<ResumakerArgs>() |> Ok
+                with
+                | ex -> CommandNotParsedException(ex.Message) |> Error
 
             let! parsed =
                 try
@@ -85,4 +88,6 @@ let main argv =
             match ex with
             | VersionRequestedException
             | HelpRequestedException -> 0
-            | _ -> 1
+            | ex ->
+                printfn "%O" ex
+                1
